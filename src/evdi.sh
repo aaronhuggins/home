@@ -1,14 +1,8 @@
 #!/usr/bin/env sh
 
+### REQUIRES SUDO ###
+. ./src/include/force_sudo.sh
 . ./src/util/cmd_exist.sh
-
-### !!! REQUIRES SUDO !!! ###
-if [ "$EUID" != 0 ];
-then
-	sudo "$0" "$@"
-	exit $?
-fi
-
 . ./src/vars/os.sh
 
 TEMP_EVDI_REPO="/etc/yum.repos.d/negativo17-fedora-multimedia.repo"

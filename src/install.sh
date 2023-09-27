@@ -9,5 +9,8 @@
 # Install Flathub repository and flatpak packages
 . ./src/flatpak.sh
 
+# Install Widevine for browsers
+. ./src/widevine.sh /opt/vivaldi
+
 # Install DisplayLink drivers
 sh ./src/evdi.sh
