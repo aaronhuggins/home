@@ -2,7 +2,7 @@
 
 function define () {
 	o=;
-	while IFS="\n" read -r a;
+	while IFS=$'\n' read -r a;
 	do o="$o$a"'
 ';
 	done;
@@ -10,10 +10,6 @@ function define () {
 }
 
 function define_flat () {
-	o=;
-	while IFS="\n" read -r a;
-	do o="$o$a"'
-';
-	done;
+	define o;
 	eval "$1=\$(printf \"\$o\" | sed -z \"s/\n/ /g\")";
 }
