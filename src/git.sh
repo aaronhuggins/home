@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 . ./src/util/define.sh
-. ./src/me.sh
-. ./src/work.sh
+. ./src/vars/me.sh
+. ./src/vars/work.sh
 
 GITCONFIG_PATH="~/.gitconfig"
 GITINCLUDE_PATH="~/.config/gitinclude"
@@ -39,6 +39,6 @@ eval "mkdir -p $GITDIR_WORK"
 eval "mkdir -p $GITINCLUDE_PATH"
 
 # Create files
-eval "echo \"$GITCONFIG\" > ${GITCONFIG_PATH}"
-eval "echo \"$GITCONFIG_ME\" > $GITINCLUDE_PATH/me"
-eval "echo \"$GITCONFIG_WORK\" > $GITINCLUDE_PATH/work"
+eval "printf \"$GITCONFIG\" > ${GITCONFIG_PATH}"
+eval "printf \"$GITCONFIG_ME\" > $GITINCLUDE_PATH/me"
+eval "printf \"$GITCONFIG_WORK\" > $GITINCLUDE_PATH/work"
