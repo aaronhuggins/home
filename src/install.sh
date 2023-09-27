@@ -10,7 +10,7 @@
 . ./src/flatpak.sh
 
 # Install Widevine for browsers
-. ./src/widevine.sh /opt/vivaldi
+sh ./src/widevine.sh /opt/vivaldi
 
 # Install DisplayLink drivers
 sh ./src/evdi.sh
