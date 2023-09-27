@@ -31,6 +31,8 @@ HEREDOC
 
 USR_BASH_COMPLETIONS=~/.local/share/bash-completion/completions
 
+mkdir -p $USR_BASH_COMPLETIONS
+
 curl -fsSL https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o "${USR_BASH_COMPLETIONS}/git"
 
 printf "$BASHRC_APPEND" >> ~/.bashrc
