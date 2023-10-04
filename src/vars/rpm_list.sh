@@ -2,9 +2,11 @@
 
 . ./src/util/define.sh
 
-RPM_LIST=""
+# shellcheck disable=SC2269
+RPM_LIST="$RPM_LIST"
 
-define_flat RPM_LIST << 'HEREDOC'
+if [ "$RPM_LIST" = "" ]; then
+	define_flat RPM_LIST << 'HEREDOC'
 akmods
 flatpak
 lcov
@@ -15,4 +17,10 @@ code
 vivaldi-stable
 gnome-tweaks
 distrobox
+libcurl
+firejail
+shellcheck
 HEREDOC
+fi
+
+export RPM_LIST

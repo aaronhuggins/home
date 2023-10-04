@@ -1,30 +1,25 @@
 #!/usr/bin/env sh
 
-### REQUIRES SUDO ###
-. ./src/include/force_sudo.sh
-. ./src/util/cmd_exist.sh
-. ./src/vars/os.sh
+# TODO: Everything. This is broken. Need to take completely different approach.
 
 TEMP_EVDI_REPO="/etc/yum.repos.d/negativo17-fedora-multimedia.repo"
 
 # Extensible Video Display Interface (DisplayLink)
 curl -fsSL https://negativo17.org/repos/fedora-multimedia.repo -o $TEMP_EVDI_REPO
 
-### BUILD evdi (succeed or fail-fast with debug output)
-export CFLAGS="-fno-pie -no-pie"
+### EXTRACT evdi
+uuid="ublue-akmods-slip"
 
-if cmd_exist rpm-ostree;
-then
-	rpm-ostree install --allow-inactive --idempotent akmod-evdi-*.fc${RELEASE}.${ARCH}
+docker create --name $uuid "ghcr.io/ublue-os/akmods:main-${RELEASE} bash"
+docker cp $uuid:/rpms /tmp/akmods-rpms
+docker rm -f $uuid
+
+if cmd_exist rpm-ostree; then
+	rpm-ostree install /tmp/akmods-rpms/ublue-os/ublue-os-akmods-addons*.rpm
+	rpm-ostree install /tmp/akmods-rpms/kmods/*evdi*.rpm
 else
-	dnf -y install akmod-evdi-*.fc${RELEASE}.${ARCH}
+	dnf -y install /tmp/akmods-rpms/ublue-os/ublue-os-akmods-addons*.rpm
+	dnf -y install /tmp/akmods-rpms/kmods/*evdi*.rpm
 fi
 
-akmods --force --kernels "${KERNEL}" --kmod evdi
-
-modinfo /usr/lib/modules/${KERNEL}/extra/evdi/evdi.ko.xz > /dev/null \
-	|| (find /var/cache/akmods/evdi/ -name \*.log -print -exec cat {} \; && exit 1)
-
 rm -f $TEMP_EVDI_REPO
-
-unset CFLAGS

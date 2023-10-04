@@ -1,8 +1,12 @@
 #!/usr/bin/env sh
 
-if [ x"$WORK_EMAIL" == "x" ];
-then
+# shellcheck disable=SC2269
+WORK_EMAIL="$WORK_EMAIL"
+
+if [ "$WORK_EMAIL" = "" ]; then
 	echo "Enter your work email:"
-	read __email
-	export WORK_EMAIL="$__email"
+	read -r __email
+	WORK_EMAIL="$__email"
 fi
+
+export WORK_EMAIL

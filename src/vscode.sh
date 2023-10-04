@@ -2,10 +2,11 @@
 
 . ./src/util/define.sh
 . ./src/util/do_line.sh
+. ./src/util/print.sh
 
+# shellcheck disable=SC2088
 VSCODE_CONFIG_PATH="~/.config/Code/User"
 VSCODE_CONFIG=""
-VSCODE_EXT=""
 
 define VSCODE_CONFIG << HEREDOC
 {
@@ -22,7 +23,7 @@ define VSCODE_CONFIG << HEREDOC
 }
 HEREDOC
 
-VSCODE_CONFIG="$(printf "$VSCODE_CONFIG" | sed 's/"/\\"/g')"
+VSCODE_CONFIG="$(print "$VSCODE_CONFIG" | sed 's/"/\\"/g')"
 
 eval "mkdir -p $VSCODE_CONFIG_PATH"
 eval "printf \"$VSCODE_CONFIG\" > ${VSCODE_CONFIG_PATH}/settings.json"

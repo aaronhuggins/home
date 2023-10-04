@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# shellcheck disable=SC2088
 
 . ./src/util/define.sh
 . ./src/vars/me.sh

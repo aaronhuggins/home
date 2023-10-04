@@ -1,11 +1,10 @@
 #!/usr/bin/env sh
 
-function do_line () {
-	while IFS=$'\n' read -r a;
-	do
-		if [ x"$a" != "x" ];
-		then
-			eval "$@ $a";
-		fi
+do_line () {
+	ARGS="${*}"
+	while IFS=$(printf '\n\n') read -r a; do
+		if [ x"$a" != "x" ]; then
+			eval "$ARGS $a";
+		fi;
 	done;
 }

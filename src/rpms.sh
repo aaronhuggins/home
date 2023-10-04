@@ -1,22 +1,18 @@
 #!/usr/bin/env sh
 
-. ./src/util/cmd_exist.sh
+. ./src/util/exists.sh
+. ./src/util/gh_url.sh
 . ./src/vars/rpm_list.sh
 . ./src/yum.sh
 
-# resolve latest Tabby terminal RPM
-TABBY_BASE_URL="https://github.com/Eugeny/tabby/releases/latest/download/"
-function tabby_rpm_name () {
-	curl -fsSL "${TABBY_BASE_URL}latest-x64-linux.yml" | grep \.rpm | head -1 | sed 's/.*url\: \(.*\.rpm\).*/\1/g';
-}
-TABBY_RPM_URL="${TABBY_BASE_URL}$(tabby_rpm_name)"
+TABBY_RPM_URL="$(gh_url Eugeny/tabby x64.rpm)"
 
 # Install Fedora RPMs
-if cmd_exist rpm-ostree;
-then
-	eval "sudo rpm-ostree install --allow-inactive --idempotent --apply-live $RPM_LIST"
-	eval "sudo rpm-ostree install --allow-inactive --idempotent --apply-live $TABBY_RPM_URL"
+if exists -c rpm-ostree; then
+	INST_CMD="sudo rpm-ostree install --allow-inactive --idempotent --apply-live"
 else
-	eval "sudo dnf -y install $RPM_LIST"
-	eval "sudo dnf -y install $TABBY_RPM_URL"
+	INST_CMD="sudo dnf -y install"
 fi
+
+eval "$INST_CMD $RPM_LIST"
+eval "$INST_CMD $TABBY_RPM_URL"

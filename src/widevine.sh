@@ -6,15 +6,15 @@
 
 ### REQUIRES SUDO ###
 . ./src/include/force_sudo.sh
-. ./src/util/cmd_exist.sh
+. ./src/util/exists.sh
 
 WIDEVINE_INSTALL_DIR="$1"
 
 # Make sure we have wget or curl
-if cmd_exist wget; then
+if exists -c wget; then
 	DL="wget"
 	DL_SILENT="wget -qO-"
-elif cmd_exist curl; then
+elif exists -c curl; then
 	DL="curl -LO"
 	DL_SILENT="curl -s"
 else
